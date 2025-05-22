@@ -34,9 +34,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 <div className="relative flex items-center">
                     {Icon && (
                         <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                            <Image src={Icon} alt="Icon" width={24} height={24} className="text-gray-400 text-3xl border-r-2 border-primary pr-2" />
+                            <Image src={Icon} alt="Icon" width={24} height={24} className="text-gray-400 text-3xl border-r-2 border-[#000000] pr-2" />
                         </div>
                     )}
+
                     <input
                         ref={ref}
                         aria-required={required}
@@ -46,7 +47,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                         value={value}
                         autoComplete="new-password"
                         className={`
-                            block w-full rounded-sm border border-gray-200  py-2
+                            block w-full rounded-2xl border border-gray-200  py-2
                             focus:border-primary focus:ring-1 focus:ring-primary text-sm
                             ${Icon ? 'pl-10' : 'pl-4'}
                             ${showError
