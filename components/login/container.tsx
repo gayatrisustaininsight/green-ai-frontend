@@ -21,6 +21,7 @@ const Container = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
+                    document.cookie = `token=${data.data.token}`;
                     localStorage.setItem('token', data.data.token);
                     localStorage.setItem('user', JSON.stringify(data.data.user));
                     router.push('/dashboard');
