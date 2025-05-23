@@ -1,8 +1,11 @@
+import DashboardWrapper from '@/components/Dashbord/DashboardWrapper';
 import React from 'react'
 
 const Dashboard = () => {
     return (
-        <div>Dashboard</div>
+        <div>
+            <DashboardWrapper />
+        </div>
     )
 }
 

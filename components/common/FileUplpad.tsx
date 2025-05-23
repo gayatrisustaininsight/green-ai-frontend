@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { useRef, useState } from "react";
 
 interface FileUploadProps {
@@ -77,12 +78,11 @@ const FileUpload: React.FC<FileUploadProps> = ({
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
         >
-            <h3 className="font-semibold text-lg mb-2">{heading}</h3>
             <div className={`border-2 border-dashed ${dragActive ? "border-blue-400" : "border-teal-300"} rounded-lg bg-white px-6 py-6 flex flex-col items-center transition-colors duration-200 relative`}>
                 <div className="flex items-center w-full">
                     {/* Folder Icon */}
                     <div className="flex-shrink-0 mr-4">
-                        <svg width="48" height="48" fill="none" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="#F3F6FA" /><path d="M10 16a2 2 0 012-2h8.343a2 2 0 011.414.586l2.657 2.657A2 2 0 0025.828 18H36a2 2 0 012 2v12a2 2 0 01-2 2H12a2 2 0 01-2-2V16z" fill="#B0B7C3" /></svg>
+                        <Image src="/icons/FileUplaod.png" alt="folder" width={58} height={58} />
                     </div>
                     <div className="flex-1">
                         <div className="font-medium text-gray-700 text-base mb-1">Upload your files</div>
@@ -99,11 +99,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 <input
                     ref={fileInputRef}
                     type="file"
-                    multiple={!!maxFiles && maxFiles > 1}
+                    multiple={true}
                     className="hidden"
                     onChange={handleInputChange}
                 />
                 {selectedFiles.length > 0 && (
+
                     <ul className="mt-4 w-full text-sm text-gray-600">
                         {selectedFiles.map((file, idx) => (
                             <li key={idx} className="truncate">{file.name}</li>
@@ -111,11 +112,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                     </ul>
                 )}
             </div>
-            {(error || errorProp) && (
-                <div className="mt-2 flex items-center text-red-500 text-sm">
-                    <span className="mr-1">❗</span> {error || errorProp}
-                </div>
-            )}
+
             {typeof uploadedCount === "number" && typeof totalCount === "number" && !error && !errorProp && (
                 <div className="mt-2 text-blue-600 text-sm">
                     <span>🔵 {uploadedCount} of {totalCount} files uploaded</span>
