@@ -10,10 +10,10 @@ interface FileType {
 interface StorageBarProps {
     used: number;
     total: number;
-    fileTypes: FileType[];
+
 }
 
-const StorageBar: React.FC<StorageBarProps> = ({ used, total, fileTypes }) => {
+const StorageBar: React.FC<StorageBarProps> = ({ used, total, }) => {
     const percentage = Math.round((used / total) * 100);
 
     return (

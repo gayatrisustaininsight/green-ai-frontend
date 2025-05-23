@@ -13,7 +13,7 @@ export default function Tabs() {
     const [activeIndex, setActiveIndex] = useState(1); // Concept Design active by default
 
     return (
-        <div className="flex justify-end mt-2 pr-1.5 border-b  border-teal-500">
+        <div className="flex justify-end mt-2 pr-1.5 border-b  border-teal-50">
             {tabs.map((tab, idx) => {
                 const isActive = idx === activeIndex;
                 return (
@@ -39,10 +39,10 @@ export default function Tabs() {
            
                            rounded-tl-3xl
                            rounded-tr-sm
-
+shadow-sm
               text-sm font-medium
        
-              ${isActive ? "bg-teal-600 text-white border border-teal-600 border-b-0" : "bg-gray-50 text-gray-500 border border-gray-300 border-b-0 hover:text-gray-700"}
+              ${isActive ? "bg-teal-600 text-white border border-teal-600 border-b-0" : "bg-white text-gray-500 border border-gray-300 border-b-0 hover:text-gray-700"}
             `}
                     >
                         {/* Left triangle pointer */}

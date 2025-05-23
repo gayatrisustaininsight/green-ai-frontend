@@ -67,11 +67,11 @@ const DashboardWrapper = () => {
         <>
             <div className="flex  items-center  gap-4 bg-gray-100  justify-between w-full    pt-3 pr-1.5">
                 <div className="w-fit  p-2  ">
-                    <h4 className="text-lg w-fit  font-semibold">
+                    <h4 className="text-xl  w-fit  font-medium">
                         Concept Design Documentation
                     </h4>
                     <span className="text-sm  p-1 font-medium text-gray-500 rounded-full bg-teal-100 px-2 py-1">
-                        asdklfjsd
+                        BD+C
                     </span>
                     {/* <span className="text-sm  text-gray-500 rounded-full bg-teal-50 px-2 py-1">
                         <span className="text-teal-700">
@@ -106,9 +106,7 @@ const DashboardWrapper = () => {
                                 uploadedCount={6}
                                 totalCount={8}
                             />
-                            <div className="flex gap-2">
-                                <StorageBar used={100} total={200} fileTypes={fileTypes} />
-                            </div>
+
                             <div className="font-semibold text-base mt-4 mb-2">All documents</div>
                             <Table headers={tableHeaders} data={tableData} />
                             <div className="flex gap-2 mt-4">
