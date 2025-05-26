@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { Input } from '../common/Input';
 import { Button } from '../common/Button';
 import { useRouter } from 'next/navigation';
-import FileUpload from '../common/FileUplpad';
+import FileUpload from '../common/FileUpoad';
 
 const Container = () => {
     const [email, setEmail] = useState('');
@@ -64,15 +64,11 @@ const Container = () => {
                     <div className='w-full flex items-center justify-center cursor-pointer'>
                         <Button fullWidth type='submit'>Log in</Button>
                     </div>
+                    <div className='w-full flex items-center justify-center cursor-pointer'>
+                        <Button fullWidth type='submit'>Sign up</Button>
+                    </div>
                 </form>
-                <FileUpload
-                    heading="Upload your files"
-                    description="Drag & drop your files here or"
-                    formats="pdf, docx, ppt, xlsx, html, zip"
-                    uploadedCount={6}
-                    totalCount={8}
-                    error="6 of 8 files uploaded"
-                />
+
             </div>
         </div>
     )

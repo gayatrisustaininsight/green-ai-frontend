@@ -1,5 +1,7 @@
 "use client";
+import Image from "next/image";
 import React from "react";
+import { Button } from "./Button";
 
 interface FileUploadProgressProps {
     fileName: string;
@@ -17,44 +19,34 @@ const FileUploadProgress: React.FC<FileUploadProgressProps> = ({
     isComplete,
 }) => {
     return (
-        <div className="flex items-center w-full mb-2">
+        <div className="flex items-center w-full mb-2 gap-1">
             {/* File icon */}
-            <div className="w-6 h-6 flex items-center justify-center mr-2">
-                {fileIcon}
-            </div>
             {/* File name and size */}
-            <div className="flex flex-col min-w-[120px] mr-4">
-                <span className="text-sm text-gray-800 whitespace-nowrap">{fileName}</span>
+            <Image src={"/icons/Pdf.jpg"} alt="file" width={44} height={44} />
+            <div className="flex flex-col items-center gap-1   mr-4">
+
+                <span
+                    title={fileName}
+                    className="text-sm text-gray-800 whitespace-nowrap max-w-[70px] truncate">{fileName}</span>
                 <span className="text-xs text-gray-500">{fileSize}</span>
             </div>
             {/* Progress bar */}
-            <div className="flex-1 mx-4">
-                <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div className=" w-[160px] min-w-[150px]">
+                <div className="w-full h-2  rounded-full overflow-hidden">
                     <div
                         className="h-full bg-green-500 transition-all duration-300"
-                        style={{ width: `${progress}%` }}
+                        style={{ width: `${100}%` }}
                     />
+                    <span className="text-xs text-gray-500">{100}%</span>
                 </div>
             </div>
-            {/* Checkmark */}
-            <div className="w-6 h-6 flex items-center justify-center">
-                {isComplete && (
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="w-5 h-5 text-green-500"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                        />
-                    </svg>
-                )}
+            <div className="flex items-center justify-center w-full min-w-min">
+                <Button>
+                    Validate File
+                </Button>
             </div>
+            {/* Checkmark */}
+
         </div>
     );
 };

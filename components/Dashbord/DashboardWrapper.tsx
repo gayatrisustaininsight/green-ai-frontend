@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import FileUpload from "../common/FileUplpad";
+import FileUpload from "../common/FileUpoad";
 import Table from "../common/Table";
 import ProgressCircle from "../common/ProgressCircle";
 import ActivityLog from "../common/ActivityLog";
@@ -90,35 +90,31 @@ const DashboardWrapper = () => {
 
 
             <div className="flex flex-col min-h-screen bg-white p-6 relative">
-                <div className="absolute  -top-11 left-0 w-full h-full  z-10">
+                <div className="absolute  -top-11 left-0 w-full   z-10">
                     <Tabs />
 
                 </div>
                 <div className="flex gap-6 w-full">
                     {/* Left Column */}
-                    <div className="flex-1 max-w-3xl">
+                    <div className="flex-1 max-w-sm">
+                        <ActivityLog logs={activityLogs} />
+
+                    </div>
+                    <div className="max-w-3xl w-full">
                         <div className="bg-white rounded-xl shadow-sm p-6 mb-6 border border-gray-100">
                             <div className="font-semibold text-lg mb-2">Concept Design Documentation</div>
                             <FileUpload
                                 heading="Upload your files"
                                 description="Drag & drop your files here or choose files"
                                 formats="pdf, docx, xlsx, jpg, png, csv"
-                                uploadedCount={6}
-                                totalCount={8}
+                                folderName="Concept Design Documentation"
                             />
-
                             <div className="font-semibold text-base mt-4 mb-2">All documents</div>
                             <Table headers={tableHeaders} data={tableData} />
-                            <div className="flex gap-2 mt-4">
-                                <button className="bg-[#10B981] text-white px-4 py-2 rounded-lg">Save to Draft</button>
-                                <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">Discard</button>
-                            </div>
+
                         </div>
                     </div>
-                    <div className="flex-1 max-w-sm">
-                        <ActivityLog logs={activityLogs} />
 
-                    </div>
                     {/* Right Column */}
                     <div className="w-[350px] flex flex-col gap-6">
 
