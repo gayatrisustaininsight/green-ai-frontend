@@ -64,12 +64,12 @@ const tableData = [
 
 
 const DashboardWrapper = () => {
-    const [analytics, setAnalytics] = useState<any>(false);
+    const [analytics, setAnalytics] = useState<any>(true);
     const handleGetAnalytics = () => {
         setAnalytics(true);
     }
     return (
-        <div className="flex flex-col min-h-screen bg-gray-100  shadow-md  relative">
+        <div className="flex flex-col min-h-screen bg-gray-100  shadow-md  ">
 
             <div className="flex  items-center  gap-4 bg-gray-100  justify-between w-full    pt-3 pr-1.5">
                 {/* <div className="w-fit  p-2  mb-5">
@@ -103,8 +103,8 @@ const DashboardWrapper = () => {
                 <div className="flex gap-6 w-full">
                     {/* Left Column */}
                     {
-                        false ? (
-                            <div className="flex-1 max-w-sm bg-red-50">
+                        analytics ? (
+                            <div className="flex-1 max-w-sm h-full  bg-red-50">
                                 <ActivityLog logs={activityLogs} />
                             </div>
                         ) : (
@@ -116,15 +116,7 @@ const DashboardWrapper = () => {
 
                     <div className=" flex-1  w-full">
                         <h4 className="text-lg font-semibold mb-2">Document Validate</h4>
-                        {
-                            false ? (
-                                <div className="bg-white rounded-xl shadow-sm p-6 mb-6  w-full border border-gray-100">
 
-                                </div>
-                            ) : (
-                                <></>
-                            )
-                        }
 
                         <div className="bg-white rounded-xl shadow-sm p-6 mb-6  w-full border border-gray-100">
 
@@ -142,17 +134,21 @@ const DashboardWrapper = () => {
                     </div>
 
                     {/* Right Column */}
-                    <div className={` flex  max-w-xl  flex-col gap-6 ${false ? "w-[350px]" : "w-full"}`}>
+                    <div className={` flex  max-w-xl h-full   flex-col gap-6 ${analytics ? "w-[350px]" : "w-full"}`}>
 
                         {
-                            false ? (
-                                <ScoreCard
-                                    score={57}
-                                    maxScore={57}
-                                    minScore={40}
-                                    certification="Silver Certification"
-                                    tips="Insight: view your score and tips to improve"
-                                />
+                            analytics ? (
+                                <div className="absolute top-0   bg-white h-full  right-0  shadow-2xl rounded-tl-xl rounded-bl-xl ">
+                                    <ScoreCard
+                                        score={57}
+                                        maxScore={57}
+                                        minScore={40}
+                                        certification="Silver Certification"
+                                        tips="Insight: view your score and tips to improve"
+                                    />
+
+
+                                </div>
                             ) : (
                                 <>
                                     <Activity />

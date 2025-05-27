@@ -21,7 +21,7 @@ const ProgressCircle: React.FC<ProgressCircleProps> = ({
     const offset = circumference - (percent / 100) * circumference;
 
     return (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center w-full mb-4">
             <svg width={size} height={size} className="block">
                 <circle
                     cx={size / 2}
@@ -51,6 +51,9 @@ const ProgressCircle: React.FC<ProgressCircleProps> = ({
                     className="fill-gray-700 text-2xl font-bold"
                 >
                     {percent}%
+                    <div className="text-xs text-gray-500">
+                        Progress
+                    </div>
                 </text>
             </svg>
             {label && <div className="mt-2 text-gray-500 text-sm">{label}</div>}
