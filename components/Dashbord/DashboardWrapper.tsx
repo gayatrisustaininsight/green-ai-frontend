@@ -69,7 +69,7 @@ const DashboardWrapper = () => {
         setAnalytics(true);
     }
     return (
-        <>
+        <div className="flex flex-col min-h-screen bg-gray-100  shadow-md  relative">
 
             <div className="flex  items-center  gap-4 bg-gray-100  justify-between w-full    pt-3 pr-1.5">
                 {/* <div className="w-fit  p-2  mb-5">
@@ -95,7 +95,7 @@ const DashboardWrapper = () => {
             </div>
 
 
-            <div className="flex flex-col min-h-screen bg-gray-100 rounded-lg m-2 mt-0 shadow-md  p-6 relative">
+            <div className="flex flex-col min-h-screen bg-gray-100 rounded-lg m-2 mt-8 shadow-md  p-6 relative">
                 <div className="absolute  -top-11 right-0 w-full   z-10">
                     <Tabs />
 
@@ -145,7 +145,7 @@ const DashboardWrapper = () => {
                     <div className={` flex  max-w-xl  flex-col gap-6 ${false ? "w-[350px]" : "w-full"}`}>
 
                         {
-                            analytics ? (
+                            false ? (
                                 <ScoreCard
                                     score={57}
                                     maxScore={57}
@@ -158,9 +158,11 @@ const DashboardWrapper = () => {
                                     <Activity />
                                     <div className="flex justify-end">
                                         <Button
+
                                             variant="outline"
                                             size="sm"
                                             onClick={handleGetAnalytics}>Get Analytics</Button>
+
                                     </div>
                                 </>
                             )
@@ -169,7 +171,7 @@ const DashboardWrapper = () => {
                 </div>
 
             </div>
-        </>
+        </div>
     );
 };
 

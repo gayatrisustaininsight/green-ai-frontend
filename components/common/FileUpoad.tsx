@@ -169,28 +169,33 @@ const FileUpload: React.FC<FileUploadProps> = ({
         <div className={`w-full   flex  gap-4  ${true ? "flex-col" : "flex-row"}`}>
             <div
 
-                className={`w-full   mt-2 ${dragActive ? "border-blue-400" : ""} ${false ? "max-w-[250px]" : ""}`}
+                className={`w-full    mt-2 ${dragActive ? "border-blue-400" : ""} ${false ? "max-w-[250px]" : "flex items-center w-full mx-auto"}`}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
             >
                 <div
-                    className={`border-2 p-4 border-dashed   ${dragActive ? "border-blue-400" : "border-teal-300"} rounded-lg bg-white px-6 py-6 flex flex-row items-center transition-colors duration-200 relative`}
+                    className={`border-2 p-4 border-dashed  w-full  ${dragActive ? "border-blue-400" : "border-teal-300"} rounded-lg bg-white px-6 py-6 flex flex-row items-center transition-colors duration-200 relative`}
                     onClick={openFileDialog}
                 >
 
-                    <div className="flex flex-col items-center w-full">
+                    <div className={`flex flex-row  w-full ${isAnalytics ? "flex-col items-center" : "flex-row gap-2"}`} >
 
                         <div className="flex-shrink-0 mr-4">
-                            <Image src="/icons/FileUplaod.png" alt="folder" width={58} height={58} />
+                            <Image src="/icons/FileUplaod.png" alt="folder" width={
+                                isAnalytics ? 100 : 58
+                            } height={
+                                isAnalytics ? 100 : 58
+                            } />
                         </div>
-                        <div className="flex-1 flex flex-col items-center  gap-2 justify-center mt-10 ">
-                            <h4 className="text-sm font-semibold text-gray-500 w-full text-center">
+                        <div className={`${isAnalytics ? "flex flex-col   gap-2   " : "flex-1 flex flex-col items-center  gap-2 justify-center "}`}>
+                            <h4 className="text-sm font-semibold text-gray-500 w-full text-">
                                 {heading}
                             </h4>
-                            <button className="text-sm bg-teal-500 text-white px-5 py-1 rounded-full font-medium text-center">Browse</button>
 
-                            <div className="text-xs relative text-gray-400 text-center flex items-center mt-1">
+                            <button className="text-sm bg-teal-500 text-white  max-w-min px-5 py-1 rounded-full font-medium text-">Browse</button>
+
+                            <div className="text-xs relative text-gray-400 text-center flex items- mt-1">
                                 Supported formats: {formats}
                                 <svg className="absolute -right-1.5 top-0    w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>
                             </div>
