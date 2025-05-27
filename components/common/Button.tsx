@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import Image from "next/image";
+import { WiStars } from "react-icons/wi";
 
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -32,7 +33,7 @@ export const Button = ({
         primary: "bg-[#10B981] hover:bg-[#059669] text-white disabled:bg-primary-light",
         secondary: "bg-gray-700 hover:bg-gray-800 text-white",
         danger: "bg-red-500 hover:bg-red-600 text-white",
-        outline: "border-2 border-primary text-primary hover:bg-primary/10"
+        outline: "border-2 border-[#10B981] text-[#10B981] hover:bg-[#10B981]/10"
     };
 
     const sizes = {
@@ -77,8 +78,18 @@ export const Button = ({
                     />
                 </svg>
             )}
-            {Icon && <Image src={Icon} alt="Icon" className="mr-2" width={20} height={20} />}
-            {children}
+            {variant === "outline" ? (
+                <div className="flex flex-row gap-2 items-center">
+                    <WiStars className="text-[#10B981] text-2xl" />
+                    {children}
+                </div>
+            ) : (
+                <>
+                    {Icon && <Image src={Icon} alt="Icon" className="mr-2" width={20} height={20} />}
+                    {children}
+                </>
+            )}
+
         </button>
     );
 }; 

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import FileUpload from "../common/FileUpoad";
 import Table from "../common/Table";
 import ProgressCircle from "../common/ProgressCircle";
@@ -9,7 +9,7 @@ import StorageBar from "../common/StorageBar";
 import Tabs from "../common/Stages";
 import Stepper from "../common/Stepper";
 import { MdOutlineElectricBolt } from "react-icons/md";
-
+import { Button } from "../common/Button";
 const activityLogs: { message: string; timestamp: string; type: "success" | "error" }[] = [
     { message: "Files Uploaded Successfully", timestamp: "Dec 2, 2024", type: "success" },
     { message: "Corrupt file alert", timestamp: "Dec 2, 2024", type: "error" },
@@ -65,7 +65,12 @@ const tableData = [
 ];
 
 
+
 const DashboardWrapper = () => {
+    const [analytics, setAnalytics] = useState<any>(false);
+    const handleGetAnalytics = () => {
+        setAnalytics(true);
+    }
     return (
         <>
 
@@ -148,6 +153,12 @@ const DashboardWrapper = () => {
                             tips="Insight: view your score and tips to improve"
                         />
                     </div>
+                </div>
+                <div className="flex justify-end">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleGetAnalytics}>Get Analytics</Button>
                 </div>
             </div>
         </>
