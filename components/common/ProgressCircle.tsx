@@ -51,12 +51,19 @@ const ProgressCircle: React.FC<ProgressCircleProps> = ({
                     className="fill-gray-700 text-2xl font-bold"
                 >
                     {percent}%
-                    <div className="text-xs text-gray-500">
-                        Progress
-                    </div>
+
+                </text>
+                <text
+                    x="50%"
+                    y="65%"
+                    textAnchor="middle"
+                    dy=".3em"
+                    className="fill-gray-700 text-xs font-semibold mt-2"
+                >
+                    In   Progress
                 </text>
             </svg>
-            {label && <div className="mt-2 text-gray-500 text-sm">{label}</div>}
+            {label && <div className="mt-2 text-gray-500 text-sm">{" In   Progress"}</div>}
         </div>
     );
 };

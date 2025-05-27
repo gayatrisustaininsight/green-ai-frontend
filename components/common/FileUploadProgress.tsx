@@ -19,20 +19,20 @@ const FileUploadProgress: React.FC<FileUploadProgressProps> = ({
     isComplete,
 }) => {
     return (
-        <div className="flex items-center w-full mb-2 gap-1">
+        <div className="flex items-center justify-center  w-full mb-2 gap-1">
             {/* File icon */}
             {/* File name and size */}
             <Image src={"/icons/Pdf.jpg"} alt="file" width={44} height={44} />
-            <div className="flex flex-col items-center gap-1   mr-4">
+            <div className="flex flex-col items-center gap-1 justify-between   mr-4 ml-2">
 
                 <span
                     title={fileName}
-                    className="text-sm text-gray-800 whitespace-nowrap max-w-[70px] truncate">{fileName}</span>
-                <span className="text-xs text-gray-500">{fileSize}</span>
+                    className="text-sm text-gray-800 whitespace-nowrap min-w-[100px]  max-w-[100px] truncate">{fileName}</span>
+                <span className="text-xs text-gray-500 w-full">{fileSize}</span>
             </div>
             {/* Progress bar */}
-            <div className="flex w-full  items-center gap-1">
-                <div className="w-full h-2  rounded-full overflow-hidden">
+            <div className="flex w-full items-center gap-1">
+                <div className="w-full min-w-[160px] h-2  rounded-full overflow-hidden">
                     <div
                         className="h-full bg-green-500 transition-all duration-300"
                         style={{ width: `${100}%` }}
@@ -41,9 +41,9 @@ const FileUploadProgress: React.FC<FileUploadProgressProps> = ({
                 <span className="text-xs text-gray-500">{100}%</span>
             </div>
             <div className="flex items-center justify-center w-full min-w-min">
-                <Button>
+                {/* <Button>
                     Validate File
-                </Button>
+                </Button> */}
             </div>
             {/* Checkmark */}
 

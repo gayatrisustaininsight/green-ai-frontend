@@ -4,6 +4,9 @@ import Image from "next/image";
 import React, { useRef, useState } from "react";
 import StorageBar from "./StorageBar";
 import FileUploadProgress from "./FileUploadProgress";
+import { Button } from "./Button";
+import axios from 'axios';
+import { useFileContext } from "@/context/FileContext";
 
 interface FileUploadProps {
     heading: string;
@@ -35,7 +38,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
     error: errorProp,
     uploadedCount,
     totalCount,
-    folderName,
+    folderName = "OCR_Upload",
 }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [dragActive, setDragActive] = useState(false);
@@ -43,6 +46,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
     const [error, setError] = useState<string | undefined>(errorProp);
     const [isUploading, setIsUploading] = useState(false);
     const [fileProgress, setFileProgress] = useState<FileProgress[]>([]);
+    const { files, setFiles } = useFileContext();
 
     const formatFileSize = (bytes: number): string => {
         if (bytes === 0) return '0 Bytes';
@@ -55,7 +59,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
     const uploadFiles = async (files: File[]) => {
         try {
             setIsUploading(true);
-            const formData = new FormData();
 
             // Initialize progress for each file
             const initialProgress = files.map(file => ({
@@ -66,47 +69,44 @@ const FileUpload: React.FC<FileUploadProps> = ({
             }));
             setFileProgress(initialProgress);
 
-            // Upload each file separately to track individual progress
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const singleFileFormData = new FormData();
-                singleFileFormData.append('file', file);
-
-                const xhr = new XMLHttpRequest();
-
-                xhr.upload.onprogress = (event) => {
-                    if (event.lengthComputable) {
-                        const progress = Math.round((event.loaded / event.total) * 100);
-                        setFileProgress(prev => prev.map((f, idx) =>
-                            idx === i ? { ...f, progress } : f
-                        ));
-                    }
-                };
-
-                await new Promise((resolve, reject) => {
-                    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-
-                    if (!backendUrl) {
-                        throw new Error('NEXT_PUBLIC_BACKEND_URL is not defined');
-                    }
-
-                    xhr.open('POST', `${backendUrl}/api/upload/${folderName}`);
-
-                    xhr.onload = () => {
-                        if (xhr.status >= 200 && xhr.status < 300) {
-                            setFileProgress(prev => prev.map((f, idx) =>
-                                idx === i ? { ...f, progress: 100, isComplete: true } : f
-                            ));
-                            resolve(JSON.parse(xhr.response));
-                        } else {
-                            reject(new Error(xhr.response));
-                        }
-                    };
-
-                    xhr.onerror = () => reject(new Error('Network error'));
-                    xhr.send(singleFileFormData);
-                });
+            const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+            if (!backendUrl) {
+                throw new Error('NEXT_PUBLIC_BACKEND_URL is not defined');
             }
+
+            // Create FormData and append all files
+            const formData = new FormData();
+            files.forEach(file => {
+                formData.append('files', file);
+            });
+
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+                onUploadProgress: (progressEvent: { loaded: number; total: number }) => {
+                    if (progressEvent.total) {
+                        const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                        // Update progress for all files since we're uploading them together
+                        setFileProgress(prev => prev.map(f => ({
+                            ...f,
+                            progress: progress
+                        })));
+                    }
+                }
+            };
+
+            const res = await axios.post(`${backendUrl}/upload/${folderName}`, formData, config);
+            console.log(res, "RES");
+            setFiles(res?.data?.data);
+
+
+            // Mark all files as complete after successful upload
+            setFileProgress(prev => prev.map(f => ({
+                ...f,
+                progress: 100,
+                isComplete: true
+            })));
 
             return { success: true };
         } catch (error) {
@@ -166,42 +166,49 @@ const FileUpload: React.FC<FileUploadProps> = ({
     };
 
     return (
-        <div className={`w-full   flex  gap-4  ${true ? "flex-col" : "flex-row"}`}>
+        <div className={`w-full   flex  gap-6  ${isAnalytics ? "flex-row" : "flex-col"}`}>
             <div
 
-                className={`w-full    mt-2 ${dragActive ? "border-blue-400" : ""} ${false ? "max-w-[250px]" : "flex items-center w-full mx-auto"}`}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
+                className={`w-full    mt-2 ${dragActive ? "border-blue-400" : ""} ${isAnalytics ? "max-w-[250px]" : "flex items-center  w-full mx-auto"}`}
+
             >
                 <div
-                    className={`border-2 p-4 border-dashed  w-full  ${dragActive ? "border-blue-400" : "border-teal-300"} rounded-lg bg-white px-6 py-6 flex flex-row items-center transition-colors duration-200 relative`}
+                    className={`border-2 p-4 border-dashed w-full ${dragActive ? "border-blue-400" : "border-teal-300"} rounded-lg bg-white px-6 py-6 flex items-center justify-center transition-colors duration-200 relative`}
                     onClick={openFileDialog}
                 >
-
-                    <div className={`flex flex-row  w-full ${isAnalytics ? "flex-col items-center" : "flex-row gap-2"}`} >
-
-                        <div className="flex-shrink-0 mr-4">
-                            <Image src="/icons/FileUplaod.png" alt="folder" width={
-                                isAnalytics ? 100 : 58
-                            } height={
-                                isAnalytics ? 100 : 58
-                            } />
+                    <div className="flex items-center justify-center w-full gap-4 " style={
+                        isAnalytics ? {
+                            flexDirection: "column"
+                        } : {
+                            flexDirection: "row"
+                        }
+                    }>
+                        <div className="flex-shrink-0">
+                            <Image src="/icons/FileUplaod.png" alt="folder" width={!isAnalytics ? 100 : 58} height={!isAnalytics ? 100 : 58} />
                         </div>
-                        <div className={`${isAnalytics ? "flex flex-col   gap-2   " : "flex-1 flex flex-col items-center  gap-2 justify-center "}`}>
-                            <h4 className="text-sm font-semibold text-gray-500 w-full text-">
+                        <div className="flex flex-col gap-2 justify-center" style={
+                            isAnalytics ? {
+                                alignItems: "center"
+                            } : {
+                                alignItems: "flex-start"
+                            }
+                        }>
+                            <h4 className="text-sm font-semibold text-gray-500 w-full" style={
+                                isAnalytics ? {
+                                    textAlign: "center"
+                                } : {
+                                    textAlign: "left"
+                                }
+                            }>
                                 {heading}
                             </h4>
-
-                            <button className="text-sm bg-teal-500 text-white  max-w-min px-5 py-1 rounded-full font-medium text-">Browse</button>
-
-                            <div className="text-xs relative text-gray-400 text-center flex items- mt-1">
+                            <button className="text-sm bg-teal-500 text-white max-w-min px-5 py-1 rounded-full font-medium">Browse</button>
+                            <div className="text-xs relative text-gray-400 text-center flex items-center mt-1">
                                 Supported formats: {formats}
-                                <svg className="absolute -right-1.5 top-0    w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>
+                                <svg className="absolute -right-1.5 top-0 w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>
                             </div>
                         </div>
                     </div>
-
                     <input
                         ref={fileInputRef}
                         type="file"
@@ -210,9 +217,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
                         className="hidden"
                         onChange={handleInputChange}
                     />
-
-                    {/* File Progress List */}
-
                 </div>
 
                 {typeof uploadedCount === "number" && typeof totalCount === "number" && !error && !errorProp && (
@@ -221,30 +225,54 @@ const FileUpload: React.FC<FileUploadProps> = ({
                     </div>
                 )}
             </div>
-            <div className="flex flex-col gap-2 mt-2 w-full">
+
+            <div className="flex flex-col gap-2 w-full  overflow-y-auto">
                 <h4 className="text-sm font-semibold text-gray-500 w-full">
                     Recently Uploaded
                 </h4>
+                <div className="flex flex-col gap-2 mt-1 w-full max-h-[180px] overflow-y-auto">
+                    {
+                        fileProgress.length < 1 && (
+                            <div className="w-full mt-1 h-full    bg-gray-100 rounded-lg p-4 text-center ">
+                                <p className="text-sm text-gray-500 w-full">No files uploaded yet</p>
+                            </div>
+                        )
+                    }
 
-                {fileProgress.length > 0 && (
-                    <div className="w-full mt-4  ">
-                        {fileProgress.map((file, index) => (
-                            <FileUploadProgress
-                                key={index}
-                                fileName={file.name}
-                                fileSize={file.size}
-                                fileIcon={
-                                    <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                    </svg>
-                                }
-                                progress={file.progress}
-                                isComplete={file.isComplete}
-                            />
-                        ))}
-                    </div>
-                )}
+                    {fileProgress.length > 0 && (
+                        <div className="w-full ">
+                            {fileProgress.map((file, index) => (
+                                <FileUploadProgress
+                                    key={index}
+                                    fileName={file.name}
+                                    fileSize={file.size}
+                                    fileIcon={
+                                        <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                        </svg>
+                                    }
+                                    progress={file.progress}
+                                    isComplete={file.isComplete}
+                                />
+                            ))}
+
+                        </div>
+                    )}
+                </div>
+                {
+                    fileProgress.length > 0 && (
+                        <div className="w-full flex justify-end mt-2">
+
+                            <Button
+                                variant="primary"
+
+                            >
+                                Execute
+                            </Button>
+                        </div>
+                    )}
             </div>
+
 
         </div>
     );

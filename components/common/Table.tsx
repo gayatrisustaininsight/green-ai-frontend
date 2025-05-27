@@ -1,17 +1,13 @@
 "use client"
 import Image from 'next/image'
-import React, { type JSX } from 'react'
+import React from 'react'
+import { useFileContext } from '@/context/FileContext'
 
 interface FileData {
-    id: string
-    name: string
-    type: string // e.g. 'pdf', 'docx', 'zip'
-    size: string
-    status: 'Error' | 'Complete'
-    date: string
-    lastUpdated: string
-    owner: { name: string; avatar?: string }
-    version: string
+    name: string;
+    url: string;
+    lastModified: string;
+    size: number;
 }
 
 const statusIcons: Record<string, JSX.Element> = {
@@ -33,45 +29,80 @@ const fileTypeIcons: Record<string, string> = {
     pdf: '/file.svg',
     docx: '/file.svg',
     zip: '/file.svg',
+    png: '/file.svg',
 }
 
-const Table = ({ headers, data }: { headers: string[], data: FileData[] }) => {
+const Table = ({ headers }: { headers: string[] }) => {
+    const { files } = useFileContext();
+
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    };
+
+    const formatFileSize = (bytes: number): string => {
+        if (bytes === 0) return '0 Bytes';
+
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    };
+
     return (
-        <table className="w-full text-left">
-            <thead>
-                <tr className="bg-gray-100">
-                    <th className="p-2 px-3 border-gray-300 border-2 rounded-tl-2xl"><input type="checkbox" /></th>
-                    {headers.map((header, index) => (
-                        <th
-                            key={index}
-                            className={`p-2 px-3 border-gray-300 border-2 text-sm text-gray-600 ${index === headers.length - 1 ? 'rounded-tr-2xl' : ''}`}
-                        >
-                            {header}
-                        </th>
-                    ))}
-                </tr>
-            </thead>
-
-            <tbody>
-                {data.map((row, idx) => (
-                    <tr key={row.id} className="bg-white  hover:bg-gray-50 transition rounded-b-2xl border-b-2   border-l-2  border-r-2 border-gray-200 ">
-                        <td className="p-2 px-3 "><input type="checkbox" /></td>
-                        <td className="flex items-center gap-2 p-2 px-3">
-                            {/* <Image src={fileTypeIcons[row.type] || '/file.svg'} alt={row.type} width={32} height={32} /> */}
-                            <div>
-                                <div className="font-medium">{row.name}</div>
-                                <div className="text-xs text-gray-400">{row.size}</div>
-                            </div>
-                        </td>
-                        <td className="p-2 px-3">{statusIcons[row.status]}</td>
-                        <td className="p-2 px-3">{row.date}</td>
-                        <td className="p-2 px-3 rounded-b-2xl">{row.lastUpdated}</td>
-
-
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+        files.length > 0 ? (
+            <div className="rounded-xl border border-gray-200 shadow-sm">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                        <thead className="bg-gray-50 sticky top-0">
+                            <tr>
+                                <th className="p-3 border-b border-gray-200">
+                                    <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                                </th>
+                                {headers.map((header, index) => (
+                                    <th
+                                        key={index}
+                                        className="p-3 border-b border-gray-200 text-sm font-semibold text-gray-600"
+                                    >
+                                        {header}
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div className="overflow-y-auto max-h-[300px]">
+                    <table className="w-full text-left">
+                        <tbody className="divide-y divide-gray-200">
+                            {files.map((file, idx) => (
+                                <tr key={file.name} className="bg-white hover:bg-gray-50 transition-colors duration-200">
+                                    <td className="p-3">
+                                        <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                                    </td>
+                                    <td className="flex items-center gap-3 p-2">
+                                        <div className='flex flex-col gap-1 max-w-[150px] truncate' title={file.name}>
+                                            <div className="font-medium text-sm text-gray-900">{file.name}</div>
+                                            <div className="text-xs text-gray-500">{formatFileSize(file.size)}</div>
+                                        </div>
+                                    </td>
+                                    <td className="p-2">{statusIcons['Complete']}</td>
+                                    <td className="p-2 text-sm text-gray-600">{formatDate(file.lastModified)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        ) : (
+            <div className="flex justify-center items-center h-full w-full bg-gray-100 rounded-lg p-4 mt-4 text-gray-500">
+                <p className="text-gray-500">No files uploaded yet</p>
+            </div>
+        )
     )
 }
 

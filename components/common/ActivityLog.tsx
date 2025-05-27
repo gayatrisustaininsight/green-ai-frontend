@@ -15,7 +15,7 @@ interface ActivityLogProps {
 
 const ActivityLog: React.FC<ActivityLogProps> = ({ logs }) => {
     return (
-        <div className="bg-white rounded-xl shadow-sm p-4 h-[400px] overflow-y-auto border border-gray-100">
+        <div className="bg-white/50 rounded-xl h-[calc(100vh-100px)]  shadow-sm p-4  overflow-y-auto border border-gray-100">
             <div className="flex items-center justify-between  mb-6">
                 <div className="flex flex-col gap-1" >
 
