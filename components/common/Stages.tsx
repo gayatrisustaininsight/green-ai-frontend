@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 
 const tabs = [
-    "Pre-Concept Docs",
+
     "Concept Design",
     "Schematic Design",
     "Detailed Design",
-    "Issue for Tender",
-    "Issue for Construction",
+
 ];
 
 export default function Tabs() {

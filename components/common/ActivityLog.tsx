@@ -24,10 +24,7 @@ const ActivityLog: React.FC<ActivityLogProps> = ({ logs }) => {
                         Total 10 Credit
                     </div>
                 </div>
-                <Button variant="secondary" size="sm" type="button">
-                    +  Add New Category
 
-                </Button>
 
             </div>
             <ul className="space-y-3">

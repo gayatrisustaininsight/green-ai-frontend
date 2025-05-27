@@ -9,17 +9,10 @@ const optins = [{
     id: 1,
     subLabels: [
         {
-            label: "Low-Emitting Materials",
+            label: "Construction Indoor Air Quality Management Plan",
             value: 1
         },
-        {
-            label: "LEED Credit 2",
-            value: 2
-        },
-        {
-            label: "LEED Credit 3",
-            value: 3
-        }
+
     ]
 }];
 
@@ -59,7 +52,7 @@ const Dropper = () => {
                 <div className={`overflow-hidden transition-all duration-300 e ${selected?.id === option?.id && isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
                     <div className="w-full flex flex-col gap-2">
                         {option?.subLabels?.map((subLabel, idx) => (
-                            <div key={idx} className="border-b transition-all duration-300 transform hover:bg-teal-50 cursor-pointer border-gray-200 p-2">{subLabel.label}</div>
+                            <div key={idx} className="border-b text-gray-700 text-sm transition-all duration-300 transform hover:bg-teal-50 cursor-pointer border-gray-200 p-2">{subLabel.label}</div>
                         ))}
                     </div>
                 </div>

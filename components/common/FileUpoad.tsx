@@ -188,9 +188,9 @@ const FileUpload: React.FC<FileUploadProps> = ({
                         <div className="flex-1 flex flex-col items-center justify-center mt-10 ">
                             <button className="text-sm bg-teal-500 text-white px-5 py-1 rounded-full font-medium text-center">Browse</button>
 
-                            <div className="text-xs text-gray-400 flex items-center mt-1">
+                            <div className="text-xs relative text-gray-400 text-center flex items-center mt-1">
                                 Supported formats: {formats}
-                                <svg className="ml-1 w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>
+                                <svg className="absolute -right-1.5 top-0    w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>
                             </div>
                         </div>
                     </div>

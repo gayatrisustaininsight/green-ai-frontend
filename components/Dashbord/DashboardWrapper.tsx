@@ -7,6 +7,8 @@ import ActivityLog from "../common/ActivityLog";
 import ScoreCard from "../common/ScoreCard";
 import StorageBar from "../common/StorageBar";
 import Tabs from "../common/Stages";
+import Stepper from "../common/Stepper";
+import { MdOutlineElectricBolt } from "react-icons/md";
 
 const activityLogs: { message: string; timestamp: string; type: "success" | "error" }[] = [
     { message: "Files Uploaded Successfully", timestamp: "Dec 2, 2024", type: "success" },
@@ -65,6 +67,7 @@ const tableData = [
 const DashboardWrapper = () => {
     return (
         <>
+
             <div className="flex  items-center  gap-4 bg-gray-100  justify-between w-full    pt-3 pr-1.5">
                 <div className="w-fit  p-2  ">
                     <h4 className="text-xl  w-fit  font-medium">
@@ -89,7 +92,7 @@ const DashboardWrapper = () => {
             </div>
 
 
-            <div className="flex flex-col min-h-screen bg-white p-6 relative">
+            <div className="flex flex-col min-h-screen bg-gray-100 rounded-lg m-2 shadow-md  p-6 relative">
                 <div className="absolute  -top-11 left-0 w-full   z-10">
                     <Tabs />
 
@@ -100,9 +103,27 @@ const DashboardWrapper = () => {
                         <ActivityLog logs={activityLogs} />
 
                     </div>
-                    <div className="max-w-3xl w-full">
+                    <div className="max-w-3xl flex-1  w-full">
+                        <h4 className="text-lg font-semibold mb-2">Document Validate</h4>
+                        <div
+                            className="bg-white  flex items-center justify-between   rounded-xl shadow-sm p-6 mb-6 border border-gray-300"
+                        >
+                            <div className="flex flex-row gap-2 items-center">
+                                <div className="font-semibold bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center  text-gray-400">
+                                    <MdOutlineElectricBolt />
+                                </div>
+                                <div>
+                                    <h4 className="text-sm font-semibold text-gray-500">{"Construction Indoor Air Quality Management Plan"}</h4>
+                                    <span className="text-xs font-semibold text-gray-400">
+                                        EAQ Credit 1
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
                         <div className="bg-white rounded-xl shadow-sm p-6 mb-6 border border-gray-100">
-                            <div className="font-semibold text-lg mb-2">Concept Design Documentation</div>
+
                             <FileUpload
                                 heading="Upload your files"
                                 description="Drag & drop your files here or choose files"

@@ -31,14 +31,14 @@ const FileUploadProgress: React.FC<FileUploadProgressProps> = ({
                 <span className="text-xs text-gray-500">{fileSize}</span>
             </div>
             {/* Progress bar */}
-            <div className=" w-[160px] min-w-[150px]">
+            <div className="flex w-full  items-center gap-1">
                 <div className="w-full h-2  rounded-full overflow-hidden">
                     <div
                         className="h-full bg-green-500 transition-all duration-300"
                         style={{ width: `${100}%` }}
                     />
-                    <span className="text-xs text-gray-500">{100}%</span>
                 </div>
+                <span className="text-xs text-gray-500">{100}%</span>
             </div>
             <div className="flex items-center justify-center w-full min-w-min">
                 <Button>
