@@ -64,7 +64,7 @@ const tableData = [
 
 
 const DashboardWrapper = () => {
-    const [analytics, setAnalytics] = useState<any>(true);
+    const [analytics, setAnalytics] = useState<any>(false);
     const handleGetAnalytics = () => {
         setAnalytics(true);
     }
@@ -114,11 +114,11 @@ const DashboardWrapper = () => {
                     }
 
 
-                    <div className=" flex-1  w-full">
+                    <div className="   w-full">
                         <h4 className="text-lg font-semibold mb-2">Document Validate</h4>
 
 
-                        <div className="bg-white rounded-xl shadow-sm p-6 mb-6  w-full border border-gray-100">
+                        <div className="bg-white rounded-xl shadow-sm p-6 mb-6  w-full  border border-gray-100">
 
                             <FileUpload
                                 isAnalytics={analytics}
