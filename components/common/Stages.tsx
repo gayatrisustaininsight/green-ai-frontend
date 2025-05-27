@@ -12,7 +12,7 @@ export default function Tabs() {
     const [activeIndex, setActiveIndex] = useState(1); // Concept Design active by default
 
     return (
-        <div className="flex justify-end mt-2 pr-1.5 border-b  border-teal-50">
+        <div className="flex   mt-2 pr-1.5 border-b  border-teal-50">
             {tabs.map((tab, idx) => {
                 const isActive = idx === activeIndex;
                 return (

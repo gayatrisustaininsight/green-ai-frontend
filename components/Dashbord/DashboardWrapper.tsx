@@ -64,12 +64,13 @@ const tableData = [
     },
 ];
 
+
 const DashboardWrapper = () => {
     return (
         <>
 
             <div className="flex  items-center  gap-4 bg-gray-100  justify-between w-full    pt-3 pr-1.5">
-                <div className="w-fit  p-2  ">
+                <div className="w-fit  p-2  mb-10">
                     <h4 className="text-xl  w-fit  font-medium">
                         Concept Design Documentation
                     </h4>
@@ -92,8 +93,8 @@ const DashboardWrapper = () => {
             </div>
 
 
-            <div className="flex flex-col min-h-screen bg-gray-100 rounded-lg m-2 shadow-md  p-6 relative">
-                <div className="absolute  -top-11 left-0 w-full   z-10">
+            <div className="flex flex-col min-h-screen bg-gray-100 rounded-lg m-2 mt-0 shadow-md  p-6 relative">
+                <div className="absolute  -top-11 right-0 w-full   z-10">
                     <Tabs />
 
                 </div>
