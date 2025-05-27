@@ -15,6 +15,7 @@ interface FileUploadProps {
     uploadedCount?: number;
     totalCount?: number;
     folderName: string;
+    isAnalytics?: boolean;
 }
 
 interface FileProgress {
@@ -29,6 +30,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
     description,
     formats,
     onFilesChange,
+    isAnalytics,
     maxFiles,
     error: errorProp,
     uploadedCount,
@@ -164,10 +166,10 @@ const FileUpload: React.FC<FileUploadProps> = ({
     };
 
     return (
-        <div className="w-full   flex flex-row gap-4  ">
+        <div className={`w-full   flex  gap-4  ${true ? "flex-col" : "flex-row"}`}>
             <div
 
-                className={`w-full max-w-[250px]   mt-2 ${dragActive ? "border-blue-400" : ""}`}
+                className={`w-full   mt-2 ${dragActive ? "border-blue-400" : ""} ${false ? "max-w-[250px]" : ""}`}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
@@ -176,16 +178,16 @@ const FileUpload: React.FC<FileUploadProps> = ({
                     className={`border-2 p-4 border-dashed   ${dragActive ? "border-blue-400" : "border-teal-300"} rounded-lg bg-white px-6 py-6 flex flex-row items-center transition-colors duration-200 relative`}
                     onClick={openFileDialog}
                 >
-                    {isUploading && (
-                        <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center">
-                            <div className="text-blue-600">Uploading...</div>
-                        </div>
-                    )}
+
                     <div className="flex flex-col items-center w-full">
+
                         <div className="flex-shrink-0 mr-4">
                             <Image src="/icons/FileUplaod.png" alt="folder" width={58} height={58} />
                         </div>
-                        <div className="flex-1 flex flex-col items-center justify-center mt-10 ">
+                        <div className="flex-1 flex flex-col items-center  gap-2 justify-center mt-10 ">
+                            <h4 className="text-sm font-semibold text-gray-500 w-full text-center">
+                                {heading}
+                            </h4>
                             <button className="text-sm bg-teal-500 text-white px-5 py-1 rounded-full font-medium text-center">Browse</button>
 
                             <div className="text-xs relative text-gray-400 text-center flex items-center mt-1">

@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Image from "next/image";
 import { WiStars } from "react-icons/wi";
+import { BsStars } from "react-icons/bs";
 
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -80,7 +81,7 @@ export const Button = ({
             )}
             {variant === "outline" ? (
                 <div className="flex flex-row gap-2 items-center">
-                    <WiStars className="text-[#10B981] text-2xl" />
+                    <BsStars className="text-[#10B981] text-xl" />
                     {children}
                 </div>
             ) : (
